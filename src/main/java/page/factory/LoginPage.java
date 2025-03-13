@@ -1,6 +1,8 @@
+package page.factory;
+
 import org.openqa.selenium.By;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
  private By usernameField= By.id("//*[@id = 'defaultLoginFormUsername']");
  private By passwordField= By.id("//*[@id = 'defaultLoginFormPassword']");
