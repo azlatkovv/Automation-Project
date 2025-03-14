@@ -5,23 +5,20 @@ package RegisterPageTests;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import page.factory.RegisterPage;
 
 
 public class RegisterPageTests  {
     WebDriver webDriver;
 
-    @BeforeClass
+    @BeforeMethod
     public void setUp(){
         webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         webDriver.get("http://training.skillo-bg.com:4300/users/register");
     }
-    @AfterClass
+    @AfterMethod
     public void tearDown(){
         webDriver.quit();
     }
@@ -34,20 +31,20 @@ public class RegisterPageTests  {
     @DataProvider(name="getUsers")
     public Object[][] getUsers(){
         return new Object[][]{
-                {"testandy","test@test.com","S3V3+9RPC7F,=Dh", "S3V3+9RPC7F,=Dh", "Public info"}};
+                {"testandy","testandy@test.com","S3V3+9RRPC7F,=Dh", "S3V3+9RRPC7F,=Dh", "Public info"}};
     }
 
     @Test
     public void userNameEmptyFieldMessage(){
-       RegisterPage registerPage = new RegisterPage(webDriver);
-       registerPage.isUrlLoaded();
-       Assert.assertEquals(registerPage.usernameFieldRequiredError(),
+        RegisterPage registerPage1 = new RegisterPage(webDriver);
+        registerPage1.isUrlLoaded();
+        Assert.assertEquals(registerPage1.usernameFieldRequiredError(),
                "This field is required!", "Error message is incorrect!");
+
     }
 
     @Test(dataProvider = "getUsers")
     public void userNameTakenMessage(String username, String email,String password, String confirmPassword ,String publicInfo){
-        // Username is Taken
         RegisterPage registerPage = new RegisterPage(webDriver);
         registerPage.isUrlLoaded();
         registerPage.fillRegisterForm(username, email, password, confirmPassword , publicInfo);
@@ -56,18 +53,15 @@ public class RegisterPageTests  {
 
     @Test
     public void minRequiredSymbolsForUsername(){
-     //Minimum 2 characters !
-        //sendkeys only 1 symbol
         RegisterPage registerPage = new RegisterPage(webDriver);
         registerPage.fillUsernameField("a");
         Assert.assertEquals(registerPage.usernameFieldRequiredError(),
                 "Minimum 2 characters !", "Error message is incorrect!");
+        registerPage.fillEmailField("");
     }
 
     @Test
     public void emailFieldFillRequiredMessage (){
-        //This field is required!
-        //sendkeys 1 symbol and delete it
         RegisterPage registerPage = new RegisterPage(webDriver);
         registerPage.fillEmailField("a");
         registerPage.clearEmailField();

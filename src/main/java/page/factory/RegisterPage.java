@@ -68,18 +68,15 @@ public class RegisterPage {
     public String usernameFieldRequiredError(){
         this.usernameField.click();
         this.emailField.click();
-       return this.usernameErrorField.getText();
-        //return error;
+        return this.usernameErrorField.getText();
     }
+
     public String getEmailFieldRequiredErrorText(){
-
        return this.emailErrorField.getText();
-        //return error;
     }
-    public void clearEmailField(){
 
+    public void clearEmailField(){
        this.emailField.sendKeys(Keys.BACK_SPACE);
-        //return error;
     }
 
 
@@ -92,9 +89,11 @@ public class RegisterPage {
         this.birthDayField.sendKeys("11111111");
         this.signInButton.click();
     }
+
     public void fillUsernameField(String username){
-        this.usernameField.sendKeys(username);
+            this.usernameField.sendKeys(username);
     }
+
     public void fillEmailField(String email){
         this.emailField.sendKeys(email);
     }
