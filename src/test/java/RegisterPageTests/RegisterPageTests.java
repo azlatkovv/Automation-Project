@@ -1,6 +1,5 @@
 package RegisterPageTests;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -24,8 +23,8 @@ public class RegisterPageTests {
     public void cleanDir() throws IOException {
         RegisterPage registerpage = new RegisterPage(webDriver);
         registerpage.cleanDirectory("src\\resources\\screenshots");
-
     }
+
     @BeforeMethod
     public void setUp (){
         webDriver = new ChromeDriver();
@@ -52,9 +51,6 @@ public class RegisterPageTests {
           }
       }
     }
-
-
-
 
     @AfterMethod
     public void tearDown(){
@@ -154,14 +150,4 @@ public class RegisterPageTests {
                 "This field is required!", "Error message is incorrect!");
     }
 
-    /*@Test
-    public void loginTest() throws InterruptedException {
-        WebElement loginButton = webDriver.findElement(By.id("nav-link-login"));
-        WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(3));
-        loginButton.click();
-        WebElement userNameField = webDriver.findElement(By.id("defaultLoginFormUsername"));
-        Assert.assertEquals(webDriver.getCurrentUrl(),
-                "http://training.skillo-bg.com:4300/users/login" ,
-                "Login page it's not loaded");
-    }*/
 }
