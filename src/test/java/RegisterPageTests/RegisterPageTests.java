@@ -1,33 +1,60 @@
 package RegisterPageTests;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.ITest;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import page.factory.RegisterPage;
+import org.openqa.selenium.io.FileHandler;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
 
 
-public class RegisterPageTests  {
+public class RegisterPageTests {
     WebDriver webDriver;
+    public static final String TEST_RESOURCES_DIR = "src\\resources\\";
+    public static final String SCREENSHOT_DIR = TEST_RESOURCES_DIR.concat("screenshot\\");
 
+    @BeforeSuite
+    public void cleanDir() throws IOException {
+        RegisterPage registerpage = new RegisterPage(webDriver);
+        registerpage.cleanDirectory("src\\resources\\screenshots");
+
+    }
     @BeforeMethod
-    public void setUp(){
+    public void setUp (){
         webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         webDriver.get("http://training.skillo-bg.com:4300/users/register");
     }
 
+    @BeforeClass
+    protected void setupTestSuite() throws IOException {
+}
+
     @AfterMethod
     public void takeFailedTestScreenshot(ITestResult testResult){
       if(ITestResult.FAILURE == testResult.getStatus()){
           TakesScreenshot screenshot = (TakesScreenshot) webDriver;
-          screenshot.getScreenshotAs(OutputType.FILE);
+          File source = screenshot.getScreenshotAs(OutputType.FILE);
+          File destination = new File(System.getProperty("user.dir") + "/src/resources/screenshots/(" +
+                  LocalDate.now()+ testResult.getName() + ".png");
+          try{
+              FileHandler.copy(source, destination);
+          }
+          catch (IOException e){
+              System.out.println("Screenshot located at " + destination);
+          }
       }
     }
+
+
+
 
     @AfterMethod
     public void tearDown(){

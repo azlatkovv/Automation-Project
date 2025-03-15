@@ -1,5 +1,6 @@
 package page.factory;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -7,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class RegisterPage {
@@ -117,6 +120,20 @@ public class RegisterPage {
                             , message));
         }catch(TimeoutException exception){
             Assert.fail("Sign in message is not present. Inner exception: " + exception);
+        }
+    }
+    public void cleanDirectory(String directoryPath) throws IOException {
+        File directory = new File(directoryPath);
+
+        Assert.assertTrue(directory.isDirectory(), "Invalid directory");
+
+        FileUtils.cleanDirectory(directory);
+
+        String[] fileList = directory.list();
+        if (fileList != null && fileList.length == 0){
+            System.out.printf("All files are deleted in Directory: %n%n", directoryPath);
+        } else {
+            System.out.printf("Unable to delete the files in Directory: %n%n", directoryPath);
         }
     }
 }
