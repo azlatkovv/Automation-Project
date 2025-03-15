@@ -32,10 +32,6 @@ public class RegisterPageTests {
         webDriver.get("http://training.skillo-bg.com:4300/users/register");
     }
 
-    @BeforeClass
-    protected void setupTestSuite() throws IOException {
-}
-
     @AfterMethod
     public void takeFailedTestScreenshot(ITestResult testResult){
       if(ITestResult.FAILURE == testResult.getStatus()){

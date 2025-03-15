@@ -122,7 +122,7 @@ public class RegisterPage {
             Assert.fail("Sign in message is not present. Inner exception: " + exception);
         }
     }
-    
+
     public void cleanDirectory(String directoryPath) throws IOException {
         File directory = new File(directoryPath);
 
