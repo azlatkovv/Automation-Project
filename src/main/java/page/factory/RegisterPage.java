@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 
-import java.security.Key;
 import java.time.Duration;
 
 public class RegisterPage {
@@ -26,8 +25,12 @@ public class RegisterPage {
     private WebElement birthDayField;
     @FindBy(id = "defaultRegisterFormPassword")
     private WebElement passwordField;
+    @FindBy(xpath = "/html/body/app-root/div[2]/app-register/div/div/form/div[4]/span")
+    private WebElement passwordErrorField;
     @FindBy(xpath = "//*[@formcontrolname='confirmPassword']")
     private WebElement confirmPasswordField;
+    @FindBy(xpath = "/html/body/app-root/div[2]/app-register/div/div/form/div[5]/span")
+    private WebElement confirmPasswordErrorField;
     @FindBy(xpath = "//*[@formcontrolname='publicInfo']")
     private WebElement publicInfoField;
     @FindBy(id ="sign-in-button")
@@ -36,17 +39,6 @@ public class RegisterPage {
     private WebElement singInMessage;
 
 
-    protected WebElement find(By locator){
-        return webDriver.findElement(locator);
-    }
-
-    protected void click(By locator){
-        find(locator).click();
-    }
-
-    protected void setText(By locator, String text){
-        find(locator).sendKeys(text);
-    }
 
     public RegisterPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -64,20 +56,34 @@ public class RegisterPage {
         }
         return true;
     }
+    public String getCurrentURL (){
+       return webDriver.getCurrentUrl();
+    }
 
     public String usernameFieldRequiredError(){
         this.usernameField.click();
         this.emailField.click();
         return this.usernameErrorField.getText();
     }
+    public String passwordFieldRequiredError(){
+        this.passwordField.click();
+        this.confirmPasswordField.click();
+        return this.passwordErrorField.getText();
+    }
 
-    public String getEmailFieldRequiredErrorText(){
+
+    public String getEmailFieldError(){
        return this.emailErrorField.getText();
     }
 
-    public void clearEmailField(){
-       this.emailField.sendKeys(Keys.BACK_SPACE);
+
+    public String getPasswordFieldError(){
+       return this.passwordErrorField.getText();
     }
+    public String getConfirmPasswordFieldError(){
+       return this.confirmPasswordErrorField.getText();
+    }
+
 
 
     public void fillRegisterForm(String username, String email,String password, String confirmPassword ,String publicInfo){
@@ -96,6 +102,15 @@ public class RegisterPage {
 
     public void fillEmailField(String email){
         this.emailField.sendKeys(email);
+    }
+    public void fillPasswordField(String password){
+        this.passwordField.sendKeys(password);
+    }
+    public void fillConfirmPasswordField(String password){
+        this.confirmPasswordField.sendKeys(password);
+    }
+    public void clearEmailField(){
+        this.emailField.sendKeys(Keys.BACK_SPACE);
     }
 
     public void onSignInMessage(String message){

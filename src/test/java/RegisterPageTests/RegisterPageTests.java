@@ -23,15 +23,31 @@ public class RegisterPageTests  {
         webDriver.quit();
     }
 
-    @Test
-    public void testSuccessRegisterPageTransition(){
-     // Successful register (popup)
-    }
+
 
     @DataProvider(name="getUsers")
     public Object[][] getUsers(){
         return new Object[][]{
-                {"testandy","testandy@test.com","S3V3+9RRPC7F,=Dh", "S3V3+9RRPC7F,=Dh", "Public info"}};
+                {"testandy","testandy@test.com","S3V3+9RPC7F,=Dh", "S3V3+9RPC7F,=Dh", "Public info"}};
+    }
+    @DataProvider(name="getNewUsers")
+    public Object[][] getNewUsers(){
+        return new Object[][]{
+                {"testandy","testandy@test.com","svasvasv", "svasvasv", "Public info"}};
+    }
+    @DataProvider(name="shortPassword")
+    public Object[][] shortPassword(){
+        return new Object[][]{
+                {"testandy","testandy@test.com","S3V", "S3V", "Public info"}};
+    }
+
+    @Test(dataProvider = "getUsers")
+    public void testSuccessRegisterPageTransition(String username, String email,String password, String confirmPassword ,String publicInfo){
+        RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.fillRegisterForm(username, email, password, confirmPassword , publicInfo);
+        Assert.assertEquals(registerPage.getCurrentURL(), "http://training.skillo-bg.com:4300/posts/all", "Register failed!");
+
+
     }
 
     @Test
@@ -66,31 +82,42 @@ public class RegisterPageTests  {
         registerPage.fillEmailField("a");
         registerPage.clearEmailField();
 
-        Assert.assertEquals(registerPage.getEmailFieldRequiredErrorText(),
+        Assert.assertEquals(registerPage.getEmailFieldError(),
                 "This field is required!", "Error message is incorrect!");
     }
 
-    @Test
-    public void passwordsDoNotMatch(){
-        //Passwords do not match!
+    @Test(dataProvider = "getUsers")
+    public void passwordsDoNotMatch(String username, String email,String password, String confirmPassword ,String publicInfo){
+        RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.fillPasswordField(password);
+        registerPage.fillConfirmPasswordField(publicInfo);
+        Assert.assertEquals(registerPage.getConfirmPasswordFieldError(),
+                "Passwords do not match!", "Error message is incorrect!");
+
     }
 
-    @Test
-    public void minimumPasswordChars(){
-        //Minimum 6 characters !
-        //sendkeys 1 symbol
+    @Test(dataProvider = "shortPassword")
+    public void minimumPasswordChars(String username, String email,String password, String confirmPassword ,String publicInfo){
+        RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.fillPasswordField(password);
+        Assert.assertEquals(registerPage.getPasswordFieldError(),
+                "Minimum 6 characters !", "Error message is incorrect!");
     }
 
-    @Test
-    public void passwordRules(){
-        //Must contain digit and uppercase letter!
-        //type  symbols without Uppercase
+    @Test(dataProvider = "getNewUsers")
+    public void passwordRules(String username, String email,String password, String confirmPassword ,String publicInfo){
+        RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.fillPasswordField(password);
+        Assert.assertEquals(registerPage.getPasswordFieldError(),
+                "Must contain digit and uppercase letter!", "Error message is incorrect!");
     }
 
     @Test
     public void passwordRequired(){
-        //This field is required!
-         //click on it and click somewhere else
+        RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.passwordFieldRequiredError();
+        Assert.assertEquals(registerPage.passwordFieldRequiredError(),
+                "This field is required!", "Error message is incorrect!");
     }
 
     /*@Test
