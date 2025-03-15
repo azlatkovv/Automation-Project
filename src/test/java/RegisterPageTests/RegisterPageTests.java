@@ -1,10 +1,12 @@
 package RegisterPageTests;
 
-
-
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.ITest;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import page.factory.RegisterPage;
 
@@ -18,23 +20,32 @@ public class RegisterPageTests  {
         webDriver.manage().window().maximize();
         webDriver.get("http://training.skillo-bg.com:4300/users/register");
     }
+
+    @AfterMethod
+    public void takeFailedTestScreenshot(ITestResult testResult){
+      if(ITestResult.FAILURE == testResult.getStatus()){
+          TakesScreenshot screenshot = (TakesScreenshot) webDriver;
+          screenshot.getScreenshotAs(OutputType.FILE);
+      }
+    }
+
     @AfterMethod
     public void tearDown(){
         webDriver.quit();
     }
-
-
 
     @DataProvider(name="getUsers")
     public Object[][] getUsers(){
         return new Object[][]{
                 {"testandy","testandy@test.com","S3V3+9RPC7F,=Dh", "S3V3+9RPC7F,=Dh", "Public info"}};
     }
+
     @DataProvider(name="getNewUsers")
     public Object[][] getNewUsers(){
         return new Object[][]{
                 {"testandy","testandy@test.com","svasvasv", "svasvasv", "Public info"}};
     }
+
     @DataProvider(name="shortPassword")
     public Object[][] shortPassword(){
         return new Object[][]{
@@ -46,8 +57,6 @@ public class RegisterPageTests  {
         RegisterPage registerPage = new RegisterPage(webDriver);
         registerPage.fillRegisterForm(username, email, password, confirmPassword , publicInfo);
         Assert.assertEquals(registerPage.getCurrentURL(), "http://training.skillo-bg.com:4300/posts/all", "Register failed!");
-
-
     }
 
     @Test
@@ -56,7 +65,6 @@ public class RegisterPageTests  {
         registerPage1.isUrlLoaded();
         Assert.assertEquals(registerPage1.usernameFieldRequiredError(),
                "This field is required!", "Error message is incorrect!");
-
     }
 
     @Test(dataProvider = "getUsers")
@@ -93,7 +101,6 @@ public class RegisterPageTests  {
         registerPage.fillConfirmPasswordField(publicInfo);
         Assert.assertEquals(registerPage.getConfirmPasswordFieldError(),
                 "Passwords do not match!", "Error message is incorrect!");
-
     }
 
     @Test(dataProvider = "shortPassword")

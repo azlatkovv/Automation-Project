@@ -7,7 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-
 import java.time.Duration;
 
 public class RegisterPage {
@@ -39,13 +38,10 @@ public class RegisterPage {
     private WebElement singInMessage;
 
 
-
     public RegisterPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
-
-
 
     public boolean isUrlLoaded(){
         WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
@@ -56,6 +52,7 @@ public class RegisterPage {
         }
         return true;
     }
+
     public String getCurrentURL (){
        return webDriver.getCurrentUrl();
     }
@@ -65,26 +62,24 @@ public class RegisterPage {
         this.emailField.click();
         return this.usernameErrorField.getText();
     }
+
     public String passwordFieldRequiredError(){
         this.passwordField.click();
         this.confirmPasswordField.click();
         return this.passwordErrorField.getText();
     }
 
-
     public String getEmailFieldError(){
        return this.emailErrorField.getText();
     }
 
-
     public String getPasswordFieldError(){
        return this.passwordErrorField.getText();
     }
+
     public String getConfirmPasswordFieldError(){
        return this.confirmPasswordErrorField.getText();
     }
-
-
 
     public void fillRegisterForm(String username, String email,String password, String confirmPassword ,String publicInfo){
         this.usernameField.sendKeys(username);
@@ -124,5 +119,4 @@ public class RegisterPage {
             Assert.fail("Sign in message is not present. Inner exception: " + exception);
         }
     }
-
 }
