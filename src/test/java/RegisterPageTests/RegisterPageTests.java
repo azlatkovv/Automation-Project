@@ -1,57 +1,13 @@
 package RegisterPageTests;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
 import page.factory.RegisterPage;
-import org.openqa.selenium.io.FileHandler;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
 
 
-public class RegisterPageTests {
-    WebDriver webDriver;
-    public static final String TEST_RESOURCES_DIR = "src\\resources\\";
-    public static final String SCREENSHOT_DIR = TEST_RESOURCES_DIR.concat("screenshot\\");
-
-    @BeforeSuite
-    public void cleanDir() throws IOException {
-        RegisterPage registerpage = new RegisterPage(webDriver);
-        registerpage.cleanDirectory("src\\resources\\screenshots");
-    }
-
-    @BeforeMethod
-    public void setUp (){
-        webDriver = new ChromeDriver();
-        webDriver.manage().window().maximize();
-        webDriver.get("http://training.skillo-bg.com:4300/users/register");
-    }
-
-    @AfterMethod
-    public void takeFailedTestScreenshot(ITestResult testResult){
-      if(ITestResult.FAILURE == testResult.getStatus()){
-          TakesScreenshot screenshot = (TakesScreenshot) webDriver;
-          File source = screenshot.getScreenshotAs(OutputType.FILE);
-          File destination = new File(System.getProperty("user.dir") + "/src/resources/screenshots/(" +
-                  LocalDate.now()+ testResult.getName() + ".png");
-          try{
-              FileHandler.copy(source, destination);
-          }
-          catch (IOException e){
-              System.out.println("Screenshot located at " + destination);
-          }
-      }
-    }
-
-    @AfterMethod
-    public void tearDown(){
-        webDriver.quit();
-    }
+public class RegisterPageTests extends Prepare{
+    WebDriver driver = getDriver();
 
     @DataProvider(name="getUsers")
     public Object[][] getUsers(){
@@ -72,23 +28,28 @@ public class RegisterPageTests {
     }
 
     @Test(dataProvider = "getUsers")
-    public void testSuccessRegisterPageTransition(String username, String email,String password, String confirmPassword ,String publicInfo){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+    public void testSuccessRegisterPageTransition(String username, String email,String password, String confirmPassword ,String publicInfo) {
+         RegisterPage registerPage = new RegisterPage(webDriver);
+         registerPage.navigateTo();
+         registerPage.isUrlLoaded();
         registerPage.fillRegisterForm(username, email, password, confirmPassword , publicInfo);
+
         Assert.assertEquals(registerPage.getCurrentURL(), "http://training.skillo-bg.com:4300/posts/all", "Register failed!");
     }
 
     @Test
     public void userNameEmptyFieldMessage(){
-        RegisterPage registerPage1 = new RegisterPage(webDriver);
-        registerPage1.isUrlLoaded();
-        Assert.assertEquals(registerPage1.usernameFieldRequiredError(),
+        RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
+        registerPage.isUrlLoaded();
+        Assert.assertEquals(registerPage.usernameFieldRequiredError(),
                "This field is required!", "Error message is incorrect!");
     }
 
     @Test(dataProvider = "getUsers")
     public void userNameTakenMessage(String username, String email,String password, String confirmPassword ,String publicInfo){
         RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.fillRegisterForm(username, email, password, confirmPassword , publicInfo);
         registerPage.onSignInMessage("Username taken");
@@ -97,6 +58,8 @@ public class RegisterPageTests {
     @Test
     public void minRequiredSymbolsForUsername(){
         RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
+        registerPage.isUrlLoaded();
         registerPage.fillUsernameField("a");
         Assert.assertEquals(registerPage.usernameFieldRequiredError(),
                 "Minimum 2 characters !", "Error message is incorrect!");
@@ -106,6 +69,8 @@ public class RegisterPageTests {
     @Test
     public void emailFieldFillRequiredMessage (){
         RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
+        registerPage.isUrlLoaded();
         registerPage.fillEmailField("a");
         registerPage.clearEmailField();
 
@@ -116,6 +81,8 @@ public class RegisterPageTests {
     @Test(dataProvider = "getUsers")
     public void passwordsDoNotMatch(String username, String email,String password, String confirmPassword ,String publicInfo){
         RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
+        registerPage.isUrlLoaded();
         registerPage.fillPasswordField(password);
         registerPage.fillConfirmPasswordField(publicInfo);
         Assert.assertEquals(registerPage.getConfirmPasswordFieldError(),
@@ -125,6 +92,8 @@ public class RegisterPageTests {
     @Test(dataProvider = "shortPassword")
     public void minimumPasswordChars(String username, String email,String password, String confirmPassword ,String publicInfo){
         RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
+        registerPage.isUrlLoaded();
         registerPage.fillPasswordField(password);
         Assert.assertEquals(registerPage.getPasswordFieldError(),
                 "Minimum 6 characters !", "Error message is incorrect!");
@@ -133,6 +102,8 @@ public class RegisterPageTests {
     @Test(dataProvider = "getNewUsers")
     public void passwordRules(String username, String email,String password, String confirmPassword ,String publicInfo){
         RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
+        registerPage.isUrlLoaded();
         registerPage.fillPasswordField(password);
         Assert.assertEquals(registerPage.getPasswordFieldError(),
                 "Must contain digit and uppercase letter!", "Error message is incorrect!");
@@ -141,6 +112,8 @@ public class RegisterPageTests {
     @Test
     public void passwordRequired(){
         RegisterPage registerPage = new RegisterPage(webDriver);
+        registerPage.navigateTo();
+        registerPage.isUrlLoaded();
         registerPage.passwordFieldRequiredError();
         Assert.assertEquals(registerPage.passwordFieldRequiredError(),
                 "This field is required!", "Error message is incorrect!");

@@ -12,33 +12,33 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
-public class RegisterPage {
+public class RegisterPage extends NavigationAndURLValidation{
     public static final String PAGE_URL = "http://training.skillo-bg.com:4300/users/register";
     private final WebDriver webDriver;
     @FindBy(xpath = "//*[@formcontrolname ='username']")
     protected WebElement usernameField;
-    @FindBy(xpath = "/html/body/app-root/div[2]/app-register/div/div/form/div[1]/span")
+    @FindBy(xpath = "//input[@formcontrolname='username']/following-sibling::span")
     protected WebElement usernameErrorField;
-    @FindBy(xpath = "/html/body/app-root/div[2]/app-register/div/div/form/div[2]/span")
+    @FindBy(xpath = "//input[@formcontrolname='email']/following-sibling::span")
     protected WebElement emailErrorField;
     @FindBy(xpath = "//*[@formcontrolname ='email']")
-    private WebElement emailField;
+    protected WebElement emailField;
     @FindBy(xpath = "//*[@formcontrolname ='birthDate']")
-    private WebElement birthDayField;
+    protected WebElement birthDayField;
     @FindBy(id = "defaultRegisterFormPassword")
-    private WebElement passwordField;
-    @FindBy(xpath = "/html/body/app-root/div[2]/app-register/div/div/form/div[4]/span")
-    private WebElement passwordErrorField;
+    protected WebElement passwordField;
+    @FindBy(xpath = "//input[@id='defaultRegisterFormPassword']/following-sibling::span")
+    protected WebElement passwordErrorField;
     @FindBy(xpath = "//*[@formcontrolname='confirmPassword']")
-    private WebElement confirmPasswordField;
-    @FindBy(xpath = "/html/body/app-root/div[2]/app-register/div/div/form/div[5]/span")
-    private WebElement confirmPasswordErrorField;
+    protected WebElement confirmPasswordField;
+    @FindBy(xpath = "//input[@id='defaultRegisterPhonePassword']/following-sibling::span")
+    protected WebElement confirmPasswordErrorField;
     @FindBy(xpath = "//*[@formcontrolname='publicInfo']")
-    private WebElement publicInfoField;
+    protected WebElement publicInfoField;
     @FindBy(id ="sign-in-button")
-    private WebElement signInButton;
+    protected WebElement signInButton;
     @FindBy(xpath = "//*[@class = 'toast-error ngx-toastr ng-trigger ng-trigger-flyInOut']")
-    private WebElement singInMessage;
+    protected WebElement singInMessage;
 
 
     public RegisterPage(WebDriver webDriver) {
@@ -46,15 +46,16 @@ public class RegisterPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public boolean isUrlLoaded(){
-        WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
-        try{
-            explicitWait.until(ExpectedConditions.urlToBe(PAGE_URL));
-        }catch(TimeoutException ex) {
-            return false;
-        }
-        return true;
+    public void navigateTo(){
+        super.navigateTo(webDriver,PAGE_URL);
     }
+
+    public boolean isUrlLoaded(){
+        return super.isUrlLoaded(webDriver, PAGE_URL);
+    }
+
+
+
 
     public String getCurrentURL (){
        return webDriver.getCurrentUrl();
@@ -137,4 +138,5 @@ public class RegisterPage {
             System.out.printf("Unable to delete the files in Directory: %n%n", directoryPath);
         }
     }
+
 }
