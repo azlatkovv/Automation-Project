@@ -1,5 +1,6 @@
 package RegisterPageTests;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -37,18 +38,21 @@ public class RegisterPageTests extends Prepare{
 
     @Test(dataProvider = "randoMUserData")
     public void testSuccessRegisterPageTransition(String password, String confirmPassword ,String publicInfo) {
-         RegisterPage registerPage = new RegisterPage(webDriver);
+         WebDriver driver = getDriver();
+         RegisterPage registerPage = new RegisterPage(driver);
          registerPage.navigateTo();
          registerPage.isUrlLoaded();
          registerPage.fillRegisterForm(registerPage.generateUsername(8,13), registerPage.generateEmail(registerPage.generateUsername(8, 13)),password, confirmPassword , publicInfo);
-         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/posts/all"));
-        // Assert.assertEquals(registerPage.getCurrentURL(),"http://training.skillo-bg.com:4300/posts/all", "Register failed!");
+         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+         if(!wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/posts/all"))){
+             Assert.assertEquals(registerPage.getCurrentURL(),"http://training.skillo-bg.com:4300/posts/all", "Register failed!");
+         }
     }
 
     @Test
     public void userNameEmptyFieldMessage(){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         Assert.assertEquals(registerPage.usernameFieldRequiredError(),
@@ -57,7 +61,8 @@ public class RegisterPageTests extends Prepare{
 
     @Test(dataProvider = "getUsers")
     public void userNameTakenMessage(String username, String email,String password, String confirmPassword ,String publicInfo){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.fillRegisterForm(username, email, password, confirmPassword , publicInfo);
@@ -66,7 +71,8 @@ public class RegisterPageTests extends Prepare{
 
     @Test
     public void minRequiredSymbolsForUsername(){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.fillUsernameField("a");
@@ -77,7 +83,8 @@ public class RegisterPageTests extends Prepare{
 
     @Test
     public void emailFieldFillRequiredMessage (){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.fillEmailField("a");
@@ -89,7 +96,8 @@ public class RegisterPageTests extends Prepare{
 
     @Test(dataProvider = "getUsers")
     public void passwordsDoNotMatch(String username, String email,String password, String confirmPassword ,String publicInfo){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.fillPasswordField(password);
@@ -100,7 +108,8 @@ public class RegisterPageTests extends Prepare{
 
     @Test(dataProvider = "shortPassword")
     public void minimumPasswordChars(String username, String email,String password, String confirmPassword ,String publicInfo){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.fillPasswordField(password);
@@ -110,7 +119,8 @@ public class RegisterPageTests extends Prepare{
 
     @Test(dataProvider = "getNewUsers")
     public void passwordRules(String username, String email,String password, String confirmPassword ,String publicInfo){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.fillPasswordField(password);
@@ -120,7 +130,8 @@ public class RegisterPageTests extends Prepare{
 
     @Test
     public void passwordRequired(){
-        RegisterPage registerPage = new RegisterPage(webDriver);
+        WebDriver driver = getDriver();
+        RegisterPage registerPage = new RegisterPage(driver);
         registerPage.navigateTo();
         registerPage.isUrlLoaded();
         registerPage.passwordFieldRequiredError();
