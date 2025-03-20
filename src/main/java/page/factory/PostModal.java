@@ -42,7 +42,6 @@ public class PostModal {
     }
 
     public String getPostTitle() {
-        //WebElement postTitle = modalElement.findElement(By.className("post-title"));
         return postTitle.getText();
     }
 

@@ -23,7 +23,6 @@ public class PostTests extends Prepare {
         WebDriver driver = getDriver();
 
         LoginPage loginPage = new LoginPage(driver);
-        //Navigate directly to Login page
         loginPage.navigateTo();
         loginPage.populateUsername(user);
         loginPage.populatePassword(password);
@@ -54,7 +53,6 @@ public class PostTests extends Prepare {
 
         PostModal postModal = new PostModal(driver);
         Assert.assertTrue(postModal.isImageVisible(), "The image is not visible!");
-        //Assert.assertEquals(postModal.getPostTitle(), caption);
         Assert.assertEquals(postModal.getPostUser(), username);
     }
 }

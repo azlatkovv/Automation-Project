@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class LoginPage extends NavigationAndURLValidation {
     public static final String PAGE_URL = "http://training.skillo-bg.com:4200/users/login";
@@ -36,7 +35,6 @@ public class LoginPage extends NavigationAndURLValidation {
     }
 
     public void navigateTo(){
-        //this.webDriver.get(PAGE_URL);
         super.navigateTo(webDriver,PAGE_URL);
     }
 
