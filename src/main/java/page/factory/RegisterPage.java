@@ -11,6 +11,7 @@ import org.testng.Assert;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Random;
 
 public class RegisterPage extends NavigationAndURLValidation{
     public static final String PAGE_URL = "http://training.skillo-bg.com:4300/users/register";
@@ -45,6 +46,7 @@ public class RegisterPage extends NavigationAndURLValidation{
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
+
 
     public void navigateTo(){
         super.navigateTo(webDriver,PAGE_URL);
@@ -138,5 +140,24 @@ public class RegisterPage extends NavigationAndURLValidation{
             System.out.printf("Unable to delete the files in Directory: %n%n", directoryPath);
         }
     }
+
+        private final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        public String generateUsername(int minLength, int maxLength) {
+            Random random = new Random();
+            int length = random.nextInt(maxLength - minLength + 1) + minLength;
+            StringBuilder username = new StringBuilder();
+
+            for (int i = 0; i < length; i++) {
+                username.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+            }
+            return username.toString();
+        }
+
+        public static String generateEmail(String username) {
+            String[] domains = {"test.net", "gmail.com", "abv.bg"};
+            return username + "@" + domains[new Random().nextInt(domains.length)];
+        }
+
 
 }

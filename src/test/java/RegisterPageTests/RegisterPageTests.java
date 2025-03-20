@@ -1,9 +1,13 @@
 package RegisterPageTests;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import page.factory.RegisterPage;
+
+import java.time.Duration;
 
 
 public class RegisterPageTests extends Prepare{
@@ -13,6 +17,11 @@ public class RegisterPageTests extends Prepare{
     public Object[][] getUsers(){
         return new Object[][]{
                 {"testandy","testandy@test.com","S3V3+9RPC7F,=Dh", "S3V3+9RPC7F,=Dh", "Public info"}};
+    }
+    @DataProvider(name="randoMUserData")
+    public Object[][] randoMUserData(){
+        return new Object[][]{
+                {"S3V3+9RPC7F,=Dh", "S3V3+9RPC7F,=Dh", "Public info"}};
     }
 
     @DataProvider(name="getNewUsers")
@@ -27,14 +36,14 @@ public class RegisterPageTests extends Prepare{
                 {"testandy","testandy@test.com","S3V", "S3V", "Public info"}};
     }
 
-    @Test(dataProvider = "getUsers")
-    public void testSuccessRegisterPageTransition(String username, String email,String password, String confirmPassword ,String publicInfo) {
+    @Test(dataProvider = "randoMUserData")
+    public void testSuccessRegisterPageTransition(String password, String confirmPassword ,String publicInfo) {
          RegisterPage registerPage = new RegisterPage(webDriver);
          registerPage.navigateTo();
          registerPage.isUrlLoaded();
-        registerPage.fillRegisterForm(username, email, password, confirmPassword , publicInfo);
-
-        Assert.assertEquals(registerPage.getCurrentURL(), "http://training.skillo-bg.com:4300/posts/all", "Register failed!");
+         registerPage.fillRegisterForm(registerPage.generateUsername(8,13), registerPage.generateEmail(registerPage.generateUsername(8, 13)),password, confirmPassword , publicInfo);
+         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+         Assert.assertEquals(registerPage.getCurrentURL(), wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/posts/all")), "Register failed!");
     }
 
     @Test
