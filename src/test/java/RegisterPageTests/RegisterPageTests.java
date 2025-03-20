@@ -43,7 +43,8 @@ public class RegisterPageTests extends Prepare{
          registerPage.isUrlLoaded();
          registerPage.fillRegisterForm(registerPage.generateUsername(8,13), registerPage.generateEmail(registerPage.generateUsername(8, 13)),password, confirmPassword , publicInfo);
          WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-         Assert.assertEquals(registerPage.getCurrentURL(), wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/posts/all")), "Register failed!");
+         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/posts/all"));
+        // Assert.assertEquals(registerPage.getCurrentURL(),"http://training.skillo-bg.com:4300/posts/all", "Register failed!");
     }
 
     @Test

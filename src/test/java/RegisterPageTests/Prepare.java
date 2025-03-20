@@ -72,9 +72,9 @@ public class Prepare {
 
         String[] fileList = directory.list();
         if (fileList != null && fileList.length == 0){
-            System.out.printf("All files are deleted in Directory: %n%n", directoryPath);
+            System.out.printf("All files are deleted in Directory: %s%n%n", directoryPath);
         } else {
-            System.out.printf("Unable to delete the files in Directory: %n%n", directoryPath);
+            System.out.printf("Unable to delete the files in Directory: %s%n%n", directoryPath);
         }
     }
 
