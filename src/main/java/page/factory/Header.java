@@ -10,8 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
+import java.util.List;
 
-public class Header {
+public class Header extends NavigationAndURLValidation{
     private final WebDriver webDriver;
     @FindBy(id = "nav-link-profile")
     private WebElement profileLink;
@@ -21,6 +22,12 @@ public class Header {
     private WebElement homeLink;
     @FindBy(id = "nav-link-new-post")
     private WebElement newPostLink;
+    @FindBy(id = "search-bar")
+    private WebElement searchBar;
+    @FindBy(xpath = "//a[contains(@class, 'post-user')]")
+    private List<WebElement> searchBarResults;
+
+
 
     public Header(WebDriver webDriver){
         this.webDriver = webDriver;
@@ -43,6 +50,25 @@ public class Header {
         WebDriverWait homePageLinkWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(3));
         homePageLinkWait.until(ExpectedConditions.elementToBeClickable(this.homeLink));
         this.homeLink.click();
+    }
+
+    public void findUserFromProfilePage(String username){
+        searchBar.click();
+        searchBar.sendKeys(username);
+    }
+
+    public boolean validateExactMatchingUsername(String username){
+        boolean isUsernameMatching = false;
+        for(WebElement webElement:searchBarResults){
+             if(username.equals(webElement.getText())){
+                 isUsernameMatching = true;
+                 break;
+             }
+             else {
+                 return false;
+             }
+        }
+       return isUsernameMatching;
     }
 
     public void clickHomeLinkWithHandle(){

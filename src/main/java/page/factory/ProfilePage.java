@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class ProfilePage{
+public class ProfilePage {
     public static final String PAGE_URL_WITHOUT_USER_ID = "http://training.skillo-bg.com:4200/users/";
     private final WebDriver webDriver;
 
@@ -20,10 +20,13 @@ public class ProfilePage{
     @FindBy(xpath = "//*[@class='col-4 app-post ng-star-inserted']")
     private List<WebElement> postAppPostItem;
 
+
+
     public ProfilePage(WebDriver webDriver){
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
+
 
     public boolean isUrlLoaded(int userId){
         WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
