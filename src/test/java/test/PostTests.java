@@ -1,4 +1,4 @@
-package RegisterPageTests;
+package test;
 
 import page.factory.*;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +14,7 @@ public class PostTests extends Prepare {
         File postPicture = new File("src\\test\\resources\\upload\\testUpload.jpg");
         String caption = "Testing create post caption";
 
-        return new Object[][]{{"vidko.v", "123abc", "vidko.v", postPicture, caption}};
+        return new Object[][]{{"andyzlzlzl", "LiD6X}aJ;G#@Q$w", "andyzlzlzl", postPicture, caption}};
     }
 
     @Test(dataProvider = "getUsers")
@@ -47,7 +47,7 @@ public class PostTests extends Prepare {
         postPage.populatePostCaption(caption);
         postPage.clickCreatePost();
 
-        Assert.assertTrue(profilePage.isUrlLoaded(8335), "The Profile URL is not correct!");
+        Assert.assertTrue(profilePage.isUrlLoaded(9312), "The Profile URL is not correct!");
         Assert.assertEquals(profilePage.getPostCount(), countPosts+1, "The number of Posts is incorrect!");
         profilePage.clickPost(countPosts);
 

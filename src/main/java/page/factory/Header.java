@@ -1,8 +1,6 @@
 package page.factory;
 
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,7 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.List;
 
 public class Header extends NavigationAndURLValidation{
     private final WebDriver webDriver;
@@ -24,8 +21,7 @@ public class Header extends NavigationAndURLValidation{
     private WebElement newPostLink;
     @FindBy(id = "search-bar")
     private WebElement searchBar;
-    @FindBy(xpath = "//a[contains(@class, 'post-user')]")
-    private List<WebElement> searchBarResults;
+
 
 
 
@@ -52,23 +48,13 @@ public class Header extends NavigationAndURLValidation{
         this.homeLink.click();
     }
 
-    public void findUserFromProfilePage(String username){
+    public void findUserFromSearchBar(String username) throws InterruptedException {
         searchBar.click();
         searchBar.sendKeys(username);
     }
 
-    public boolean validateExactMatchingUsername(String username){
-        boolean isUsernameMatching = false;
-        for(WebElement webElement:searchBarResults){
-             if(username.equals(webElement.getText())){
-                 isUsernameMatching = true;
-                 break;
-             }
-             else {
-                 return false;
-             }
-        }
-       return isUsernameMatching;
+    public boolean validateIsUsernameWritten(String username){
+        return searchBar.getAttribute("value").equals(username);
     }
 
     public void clickHomeLinkWithHandle(){

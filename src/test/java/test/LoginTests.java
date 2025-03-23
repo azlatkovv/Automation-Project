@@ -1,4 +1,4 @@
-package RegisterPageTests;
+package test;
 
 import page.factory.Header;
 import page.factory.HomePage;
