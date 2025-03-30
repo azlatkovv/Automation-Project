@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 
@@ -21,12 +20,10 @@ public class ProfilePage {
     private List<WebElement> postAppPostItem;
 
 
-
     public ProfilePage(WebDriver webDriver){
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
-
 
     public boolean isUrlLoaded(int userId){
         WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
@@ -48,6 +45,7 @@ public class ProfilePage {
         }
         return true;
     }
+
     public int getPostCount(){
         return postAppPostItem.size();
     }

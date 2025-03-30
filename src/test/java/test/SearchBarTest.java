@@ -8,7 +8,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import page.factory.Header;
 import page.factory.LoginPage;
-
 import java.time.Duration;
 
 public class SearchBarTest extends Prepare{
@@ -32,6 +31,5 @@ public class SearchBarTest extends Prepare{
         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4200/posts/all"));
         header.findUserFromSearchBar(username);
         Assert.assertTrue(header.validateIsUsernameWritten(username), "User not found!");
-
     }
 }

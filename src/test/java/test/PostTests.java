@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import java.io.File;
 
 public class PostTests extends Prepare {
@@ -19,7 +18,6 @@ public class PostTests extends Prepare {
 
     @Test(dataProvider = "getUsers")
     public void testCreatePost(String user, String password, String username, File file, String caption) {
-        //Gets a driver instance from parent class (TestObject)
         WebDriver driver = getDriver();
 
         LoginPage loginPage = new LoginPage(driver);

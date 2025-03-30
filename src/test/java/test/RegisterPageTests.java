@@ -6,18 +6,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import page.factory.RegisterPage;
-
 import java.time.Duration;
 
 
 public class RegisterPageTests extends Prepare{
-
 
     @DataProvider(name="getUsers")
     public Object[][] getUsers(){
         return new Object[][]{
                 {"testandy","testandy@test.com","S3V3+9RPC7F,=Dh", "S3V3+9RPC7F,=Dh", "Public info"}};
     }
+
     @DataProvider(name="randoMUserData")
     public Object[][] randoMUserData(){
         return new Object[][]{

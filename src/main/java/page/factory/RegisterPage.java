@@ -6,7 +6,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
 import java.util.Random;
 
@@ -43,7 +42,6 @@ public class RegisterPage extends NavigationAndURLValidation{
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
-
 
     public void navigateTo(){
         super.navigateTo(webDriver,PAGE_URL);
@@ -137,6 +135,5 @@ public class RegisterPage extends NavigationAndURLValidation{
             String[] domains = {"test.net", "gmail.com", "abv.bg"};
             return username + "@" + domains[new Random().nextInt(domains.length)];
         }
-
 
 }

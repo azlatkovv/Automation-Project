@@ -13,7 +13,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -26,6 +25,7 @@ public class Prepare {
     public static final String DOWNLOAD_DIR = TEST_RESOURCES_DIR.concat("download\\");
     public static final String SCREENSHOT_DIR = TEST_RESOURCES_DIR.concat("screenshot\\");
     protected WebDriver webDriver;
+
     @BeforeSuite
     protected void setupTestSuite() throws IOException {
         cleanDirectory(REPORTS_DIR);
@@ -42,6 +42,7 @@ public class Prepare {
         this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(45));
     }
+
     @AfterMethod
     protected void tearDownTest(ITestResult testResult){
         takeScreenshot(testResult);
