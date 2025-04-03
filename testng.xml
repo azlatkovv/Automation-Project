@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"><suite name="All Test Suite"><test verbose="2" preserve-order="true" name="C:/Users/lenovo/IdeaProjects/SeleniumFirstProject/src"><classes><class name="test.DownloadTests"><methods><include name="testDownload"/></methods></class><class name="test.LoginTests"><methods><include name="LoginUser"/><include name="LoginErrorMessages"/><include name="LoginUserPathVerification"/></methods></class><class name="test.PostTests"><methods><include name="testCreatePost"/></methods></class><class name="test.RegisterPageTests"><methods><include name="testSuccessRegisterPageTransition"/><include name="userNameEmptyFieldMessage"/><include name="userNameTakenMessage"/><include name="minRequiredSymbolsForUsername"/><include name="emailFieldFillRequiredMessage"/><include name="passwordsDoNotMatch"/><include name="minimumPasswordChars"/><include name="passwordRules"/><include name="passwordRequired"/></methods></class><class name="test.SearchBarTest"><methods><include name="validateUsernameIsWritten"/></methods></class></classes></test></suite>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="classes" thread-count="4">
+    <test verbose="2" preserve-order="true" name="C:/Users/lenovo/IdeaProjects/SeleniumFirstProject/src">
+        <classes><class name="test.DownloadTests"><methods><include name="testDownload"/>
+        </methods></class><class name="test.LoginTests"><methods><include name="LoginUser"/>
+            <include name="LoginErrorMessages"/><include name="LoginUserPathVerification"/>
+        </methods></class><class name="test.PostTests"><methods><include name="testCreatePost"/>
+        </methods></class><class name="test.RegisterPageTests"><methods><include name="testSuccessRegisterPageTransition"/>
+            <include name="userNameEmptyFieldMessage"/><include name="userNameTakenMessage"/>
+            <include name="minRequiredSymbolsForUsername"/><include name="emailFieldFillRequiredMessage"/>
+            <include name="passwordsDoNotMatch"/><include name="minimumPasswordChars"/><include name="passwordRules"/>
+            <include name="passwordRequired"/></methods></class><class name="test.SearchBarTest"><methods>
+            <include name="validateUsernameIsWritten"/></methods></class></classes></test></suite>
